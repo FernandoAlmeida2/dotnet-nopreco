@@ -45,7 +45,6 @@ namespace dotnet_nopreco.Services.AuthService
 
             try
             {
-                if (user.Name != "Admin") throw new Exception("user can only be Admin.");
                 if (await _authRepo.FindByName(user.Name) is not null)
                 {
                     throw new Exception("Admin user already exists.");

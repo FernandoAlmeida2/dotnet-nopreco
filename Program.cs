@@ -1,6 +1,8 @@
 global using dotnet_nopreco.Data;
 global using dotnet_nopreco.Repositories.Auth;
 global using dotnet_nopreco.Services.AuthService;
+global using dotnet_nopreco.Repositories.ProductRepository;
+global using dotnet_nopreco.Services.ProductService;
 using dotnet_nopreco.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -39,7 +41,9 @@ builder.Services.AddSwaggerGen(c =>
     c.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => {
         options.TokenValidationParameters = new TokenValidationParameters{

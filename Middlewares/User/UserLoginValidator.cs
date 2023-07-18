@@ -7,7 +7,7 @@ namespace dotnet_nopreco.Middlewares.User
     {
         public UserLoginValidator()
        {
-            RuleFor(p => p.Email).EmailAddress().WithMessage("Provide a valid email!");
+            RuleFor(u => u.Email).EmailAddress().WithMessage("Provide a valid email!");
        }
     }
 }

@@ -23,6 +23,7 @@ namespace dotnet_nopreco.Data
             product.Property(x => x.ImageUrl).HasColumnName("imageUrl").IsRequired();
             product.Property(x => x.Price).HasColumnName("price").IsRequired();
             product.Property(x => x.Category).HasColumnName("category").IsRequired();
+            product.Property(x => x.UpdatedAt).HasColumnName("updatedAt").IsRequired();
         }
 
         public DbSet<User> Users => Set<User>();

@@ -13,5 +13,6 @@ namespace dotnet_nopreco.Models
         public string ImageUrl { get; set; } = null!;
         public int Price { get; set; }
         public CategoryType? Category { get; set; }
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     }
 }

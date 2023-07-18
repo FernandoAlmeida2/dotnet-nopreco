@@ -28,11 +28,12 @@ namespace dotnet_nopreco.Services.AuthService
                 return response;
             }
 
-            response.Data = new LoginResponseDto {
+            response.Data = new LoginResponseDto
+            {
                 Name = user.Name,
                 Token = CreateToken(user)
             };
-            
+
             response.Message = "Login was successful.";
 
             return response;
@@ -42,18 +43,21 @@ namespace dotnet_nopreco.Services.AuthService
         {
             var response = new ServiceResponse<int>();
 
-            if (await _authRepo.FindByEmail(user.Email) is not null)
+            try
             {
-                response.HandleError("User already exists.");
-                return response;
+                if (user.Name != "Admin") throw new Exception("user can only be Admin.");
+                if (await _authRepo.FindByName(user.Name) is not null)
+                {
+                    throw new Exception("Admin user already exists.");
+                }
+                CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
+
+                response.Data = await _authRepo.InsertOne(user);
+                response.Message = "Admin user created successfully!";
             }
-
-            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-
-            response.Data = await _authRepo.InsertOne(user);
-            response.Message = "User created successfully!";
+            catch (Exception Ex) { response.HandleError(Ex.Message); }
 
             return response;
         }
@@ -88,7 +92,7 @@ namespace dotnet_nopreco.Services.AuthService
             var appSettingsToken = Environment.GetEnvironmentVariable("TokenJwt");
 
             if (appSettingsToken is null) throw new Exception("AppSettings Token is null!");
-   
+
             SymmetricSecurityKey key =
                 new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(appSettingsToken));
 

@@ -19,6 +19,11 @@ namespace dotnet_nopreco.Repositories.Auth
             return user.Id;
         }
 
+        public async Task<User?> FindByName(string name)
+        {
+            return await _context.Users.FirstOrDefaultAsync((u) => u.Name == name);
+        }
+
         public async Task<User?> FindByEmail(string email)
         {
             return await _context.Users.FirstOrDefaultAsync((u) => u.Email == email);

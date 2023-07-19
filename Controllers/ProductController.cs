@@ -32,5 +32,19 @@ namespace dotnet_nopreco.Controllers
         public async Task<ActionResult<ServiceResponse<List<Product>>>> GetAll() {
             return Ok(await _productService.GetAll()); 
         }
+
+        [Authorize]
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ServiceResponse<int>>> PutProduct(int id, ProductReqDto updatedProduct) {
+            var response = await _productService.PutProduct(id, updatedProduct);
+            if(!response.Success) {
+                if(response.Message == "A product with this name is already saved.")
+                    return Conflict(response);
+                if(response.Message == "Product not found.")
+                    return NotFound(response);
+            }
+
+            return Ok(response);
+        }
     }
 }

@@ -1,3 +1,4 @@
+using dotnet_nopreco.Dtos.Product;
 using dotnet_nopreco.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,11 +23,32 @@ namespace dotnet_nopreco.Repositories.ProductRepository
             return await _context.Products.FirstOrDefaultAsync(p => p.Name == name);
         }
 
+        public async Task<Product?> FindById(int id)
+        {
+            return await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+        }
+
         public async Task<int> SaveProduct(Product product)
         {
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
             return product.Id;
+        }
+
+        public async Task<bool> UpdateProduct(int id, ProductReqDto updatedProduct)
+        {
+            var product = await FindById(id);
+            if(product is null) return false;
+
+            product.Name = updatedProduct.Name;
+            product.Description = updatedProduct.Description;
+            product.ImageUrl = updatedProduct.ImageUrl;
+            product.Price = updatedProduct.Price;
+            product.Category = updatedProduct.Category;
+            product.UpdatedAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

@@ -6,5 +6,6 @@ namespace dotnet_nopreco.Repositories.ProductRepository
     {
         Task<int> SaveProduct(Product product);
         Task<Product?> FindByName(string name);
+        Task<List<Product>> FindAll();
     }
 }

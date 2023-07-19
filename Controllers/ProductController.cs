@@ -27,5 +27,10 @@ namespace dotnet_nopreco.Controllers
 
             return Created("Save a product", response);
         }
+
+        [HttpGet("getAll")]
+        public async Task<ActionResult<ServiceResponse<List<Product>>>> GetAll() {
+            return Ok(await _productService.GetAll()); 
+        }
     }
 }

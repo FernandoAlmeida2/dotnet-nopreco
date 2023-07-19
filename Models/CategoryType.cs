@@ -1,5 +1,8 @@
+using System.Text.Json.Serialization;
+
 namespace dotnet_nopreco.Models
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum CategoryType
     {
         Despensa = 1,

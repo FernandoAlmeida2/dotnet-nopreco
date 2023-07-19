@@ -12,6 +12,11 @@ namespace dotnet_nopreco.Repositories.ProductRepository
             _context = context;
         }
 
+        public async Task<List<Product>> FindAll()
+        {
+            return await _context.Products.OrderBy(p => p.Category).ToListAsync();
+        }
+
         public async Task<Product?> FindByName(string name)
         {
             return await _context.Products.FirstOrDefaultAsync(p => p.Name == name);

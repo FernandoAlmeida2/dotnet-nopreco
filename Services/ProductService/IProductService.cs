@@ -6,5 +6,6 @@ namespace dotnet_nopreco.Services.ProductService
     public interface IProductService
     {
         Task<ServiceResponse<int>> PostProduct(ProductReqDto newProduct);
+        Task<ServiceResponse<List<Product>>> GetAll();
     }
 }

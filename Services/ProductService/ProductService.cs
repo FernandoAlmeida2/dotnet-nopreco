@@ -11,6 +11,15 @@ namespace dotnet_nopreco.Services.ProductService
         {
             _productRepo = productRepo;
         }
+
+        public async Task<ServiceResponse<List<Product>>> GetAll()
+        {
+            var response = new ServiceResponse<List<Product>>();
+            response.Data = await _productRepo.FindAll();
+
+            return response;
+        }
+
         public async Task<ServiceResponse<int>> PostProduct(ProductReqDto newProduct)
         {
             var response = new ServiceResponse<int>();

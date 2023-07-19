@@ -10,5 +10,6 @@ namespace dotnet_nopreco.Repositories.ProductRepository
         Task<Product?> FindById(int id);
         Task<List<Product>> FindAll();
         Task<bool> UpdateProduct(int id, ProductReqDto updatedProduct);
+        Task<bool> DeleteProduct(int id);
     }
 }

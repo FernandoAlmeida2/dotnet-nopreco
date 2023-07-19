@@ -69,5 +69,21 @@ namespace dotnet_nopreco.Services.ProductService
 
             return response;
         }
+
+        public async Task<ServiceResponse<string>> DeleteProduct(int id)
+        {
+            var response = new ServiceResponse<string>();
+            try
+            {
+                var productExists = await _productRepo.DeleteProduct(id);
+                if (!productExists) throw new Exception("Product not found.");
+
+                response.Data = "Ok";
+                response.Message = "Product deleted successfully!";
+            }
+            catch (Exception Ex) { response.HandleError(Ex.Message); }
+
+            return response;
+        }
     }
 }

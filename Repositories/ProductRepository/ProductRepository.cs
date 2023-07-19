@@ -50,5 +50,16 @@ namespace dotnet_nopreco.Repositories.ProductRepository
 
             return true;
         }
+
+        public async Task<bool> DeleteProduct(int id)
+        {
+            var product = await FindById(id);
+            if(product is null) return false;
+
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
     }
 }
